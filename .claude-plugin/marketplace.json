@@ -1,0 +1,20 @@
+{
+  "name": "wisematch",
+  "owner": {
+    "name": "Octave Health Group",
+    "email": "support@findoctave.com"
+  },
+  "metadata": {
+    "description": "WiseMatch plugins for Claude"
+  },
+  "plugins": [
+    {
+      "name": "wisematch",
+      "source": "./",
+      "description": "Search in-network licensed mental health providers and show upcoming availability",
+      "version": "1.0.0",
+      "category": "healthcare",
+      "homepage": "https://www.wisematch.com"
+    }
+  ]
+}

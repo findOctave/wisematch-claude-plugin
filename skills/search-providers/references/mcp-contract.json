@@ -1,0 +1,838 @@
+{
+  "capturedAt": "2026-11-13T12:07:43+00:00",
+  "source": "https://pluto.wisematch.com/mcp",
+  "serverName": "WiseMatch",
+  "serverVersion": "4.1.6",
+  "protocolVersion": "2025-11-25",
+  "tools": [
+    {
+      "name": "search_providers",
+      "description": "Search licensed behavioral health providers by US state, insurance, care type, clinical needs, availability windows, language, and other matching filters. Use this when the user wants to find therapists or medication-management clinicians. Required input is a US state and insurance. Use self_pay when the customer is uninsured. Timezone is inferred from the state when omitted. Defaults are individual therapy and virtual care, searching all upcoming availability (at most 6 slots per provider, 4 providers per page). Virtual matches are statewide: a provider licensed in the requested state can serve the customer elsewhere in that state. For in-person searches only, optional preferredLocation (latitude/longitude) and radiusMiles must be provided together to limit results to nearby clinics. ZIP and city are valid in-person origins: convert a US ZIP centroid or city center to latitude/longitude, and send originZip when a ZIP was used. Do not tell the customer ZIP is unsupported. siteOfCare is VIRTUAL by default, IN_PERSON when asked, or EITHER when the customer chose Either. Pass desiredDate, daysOfWeek, and hourRanges only when the customer named a schedule. Classify every stated criterion in constraints as MUST_HAVE or PREFERENCE. Must-haves stay hard filters; ask before relaxing any of them, then keep the original value and set relaxed=true. Preferences on insurance, gender, availability, populations, and geo are omitted from the hard filter. This search does not filter by budget. The tool is read-only and does not book appointments, cancel care, or change provider data. Results include provider profile fields and that provider's own matching openings. resultCount is the number of provider cards on this page. Empty results mean no matching providers were found. When the first search in a turn returns no providers, the conversation response must include a Continue on WiseMatch link on its own line to https://app.wisematch.com/wisematch/start so it opens the WiseMatch Guided Flow in a new browser tab, even if a later search in that turn returns providers. Do not link any other WiseMatch page. This tool does not render the widget. After the final search in a turn, including any relaxed follow-up searches, call render_provider_results with this result's searchId. Pass providerIds only to show a subset of those providers",
+      "inputSchema": {
+        "properties": {
+          "state": {
+            "enum": [
+              "AL",
+              "AK",
+              "AZ",
+              "AR",
+              "CA",
+              "CO",
+              "CT",
+              "DE",
+              "FL",
+              "GA",
+              "HI",
+              "ID",
+              "IL",
+              "IN",
+              "IA",
+              "KS",
+              "KY",
+              "LA",
+              "ME",
+              "MD",
+              "MA",
+              "MI",
+              "MN",
+              "MS",
+              "MO",
+              "MT",
+              "NE",
+              "NV",
+              "NH",
+              "NJ",
+              "NM",
+              "NY",
+              "NC",
+              "ND",
+              "OH",
+              "OK",
+              "OR",
+              "PA",
+              "RI",
+              "SC",
+              "SD",
+              "TN",
+              "TX",
+              "UT",
+              "VT",
+              "VA",
+              "WA",
+              "WV",
+              "WI",
+              "WY",
+              "DC"
+            ],
+            "title": "UsState",
+            "type": "string"
+          },
+          "timezone": {
+            "enum": [
+              "America/New_York",
+              "America/Chicago",
+              "America/Denver",
+              "America/Los_Angeles"
+            ],
+            "title": "SupportedTimezone",
+            "type": "string",
+            "default": "America/New_York",
+            "description": "IANA zone for hourRanges and desiredDate; inferred from state when omitted"
+          },
+          "insurance": {
+            "enum": [
+              "aetna",
+              "anthem",
+              "blue_shield_of_ca",
+              "cigna",
+              "healthnet",
+              "independence_blue_cross",
+              "medicaid_medicare",
+              "medical_medicaid_medicare",
+              "umr",
+              "other",
+              "self_pay",
+              "united_healthcare",
+              "florida_blue",
+              "care_first",
+              "centivo",
+              "blue_cross_blue_shield_of_nc",
+              "blue_cross_blue_shield_of_tn",
+              "blue_cross_blue_shield_of_ny",
+              "oscar",
+              "oscar_il",
+              "oscar_fl",
+              "oscar_tx",
+              "oscar_nc",
+              "united_healthcare_oxford",
+              "aetna_medicare",
+              "blue_cross_blue_shield_of_ny_medicare",
+              "humana_medicare",
+              "medicare_ngs",
+              "blue_cross_blue_shield_of_ma",
+              "blue_cross_blue_shield_of_il",
+              "premera_blue_cross_wa",
+              "capital_blue_cross_pa",
+              "highmark_blue_cross_blue_shield_ny",
+              "highmark_blue_cross_blue_shield_pa",
+              "blue_cross_blue_shield_of_tx",
+              "horizon_bcbs_nj",
+              "regence_bs_or",
+              "regence_bs_wa",
+              "moda_health",
+              "aetna_allied_benefit_systems",
+              "ambetter_ca",
+              "ambetter_fl",
+              "ambetter_ga",
+              "ambetter_in",
+              "ambetter_ia",
+              "ambetter_oh",
+              "ambetter_tx",
+              "aetna_ameriben",
+              "avmed",
+              "blue_cross_blue_shield_of_al",
+              "blue_cross_blue_shield_of_az",
+              "blue_cross_blue_shield_of_ar",
+              "blue_cross_blue_shield_of_hi",
+              "blue_cross_blue_shield_of_id",
+              "blue_cross_blue_shield_of_ks",
+              "blue_cross_blue_shield_of_kc",
+              "blue_cross_blue_shield_of_la",
+              "carefirst_blue_cross_blue_shield_md",
+              "blue_cross_blue_shield_of_mi",
+              "blue_cross_blue_shield_of_mt",
+              "blue_cross_blue_shield_of_ne",
+              "blue_cross_blue_shield_of_nm",
+              "blue_cross_blue_shield_of_ri",
+              "blue_cross_blue_shield_of_sc",
+              "carefirst_blue_cross_blue_shield_dc",
+              "blue_cross_blue_shield_of_vt",
+              "community_health_options",
+              "dean_health_plan",
+              "highmark_blue_cross_blue_shield_de",
+              "first_choice_health_network",
+              "geisinger_health_plan",
+              "kaiser_permanente_co",
+              "kaiser_permanente_ga",
+              "kaiser_permanente_hi",
+              "kaiser_permanente_nca",
+              "kaiser_permanente_wa",
+              "magnacare",
+              "mass_general_brigham",
+              "medical_mutual_of_ohio",
+              "molina_fl",
+              "molina_tx",
+              "select_health",
+              "st_lukes_health_plan",
+              "sutter_health_plus",
+              "tricare_west",
+              "tufts_health_plan",
+              "upmc_health_plan",
+              "wellmark_blue_cross_blue_shield_ia",
+              "aetna_assurant",
+              "aetna_banner",
+              "aetna_boon_chapman",
+              "aetna_ebms",
+              "aetna_gravie",
+              "aetna_healthez",
+              "aetna_marpai",
+              "aetna_meritain",
+              "aetna_webtpa",
+              "all_savers",
+              "allegiance",
+              "alliance_coal_health_plan",
+              "alliant_health_plans",
+              "amerihealth",
+              "avera_health_plans",
+              "blue_benefit_administrators_of_ma",
+              "blue_cross_blue_shield_of_co",
+              "blue_cross_blue_shield_of_ct",
+              "blue_cross_blue_shield_of_ga",
+              "blue_cross_blue_shield_of_in",
+              "blue_cross_blue_shield_of_ky",
+              "blue_cross_blue_shield_of_me",
+              "blue_cross_blue_shield_of_mn",
+              "blue_cross_blue_shield_of_mo",
+              "blue_cross_blue_shield_of_nv",
+              "blue_cross_blue_shield_of_nh",
+              "blue_cross_blue_shield_of_oh",
+              "blue_cross_blue_shield_of_ok",
+              "blue_cross_blue_shield_of_va",
+              "highmark_blue_cross_blue_shield_wv",
+              "blue_cross_blue_shield_of_wi",
+              "ca_anthem_blue_cross",
+              "carelon_behavioral_health",
+              "caresource_ga",
+              "caresource_in",
+              "caresource_oh",
+              "clover_health_medicare_advantage",
+              "connecticare",
+              "curative",
+              "denver_health",
+              "emblem_health",
+              "evry_health",
+              "excellus_blue_cross_blue_shield_cny",
+              "excellus_blue_cross_blue_shield_ra",
+              "excellus_blue_cross_blue_shield_uny",
+              "excellus_blue_cross_blue_shield_uw",
+              "golden_rule",
+              "geha",
+              "harvard_pilgrim",
+              "hmaa",
+              "health_first",
+              "health_partners",
+              "humana",
+              "independence_administrators",
+              "kaiser_permanente_sca",
+              "kaiser_permanente_mid_atlantic",
+              "kaiser_permanente_nw",
+              "la_care_health_plan",
+              "luminare_health",
+              "martins_point",
+              "medica",
+              "mvp_health_care",
+              "network_health",
+              "nippon_life_benefits",
+              "ohio_healthy",
+              "optum_fl",
+              "optum_il",
+              "optum_nc",
+              "optum_tx",
+              "optum_wi",
+              "paramount_health",
+              "pinnacle_claims_management",
+              "premera_blue_cross_ak",
+              "presbyterian_health_plan",
+              "prime_health",
+              "providence_health_plan",
+              "regence_bs_ut",
+              "regence_bs_id",
+              "sana",
+              "sentara_health_plans",
+              "sharp_health_plans",
+              "surest",
+              "the_health_plan",
+              "united_healthcare_student_resources",
+              "viva",
+              "western_health_advantage"
+            ],
+            "title": "InsurancePayer",
+            "type": "string",
+            "description": "InsurancePayer id (aetna, cigna, united_healthcare, self_pay, ...). Required. Use self_pay when the customer is uninsured. Map the stated plan name to exactly one id; do not send a free-text carrier name"
+          },
+          "careType": {
+            "enum": [
+              "THERAPY",
+              "MED_MANAGEMENT"
+            ],
+            "title": "CareType",
+            "type": "string",
+            "default": "THERAPY"
+          },
+          "therapyType": {
+            "anyOf": [
+              {
+                "enum": [
+                  "INDIVIDUAL",
+                  "COUPLES",
+                  "FAMILY"
+                ],
+                "title": "TherapyType",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "patientPopulations": {
+            "description": "Age groups the provider must see; empty means adult, the default pool",
+            "items": {
+              "enum": [
+                "CHILDREN",
+                "PRETEENS",
+                "TEENAGERS",
+                "ADULTS",
+                "SENIORS"
+              ],
+              "title": "PatientPopulation",
+              "type": "string"
+            },
+            "maxItems": 5,
+            "title": "Patientpopulations",
+            "type": "array"
+          },
+          "clinicalNeeds": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "enum": [
+                    "ADDICTION",
+                    "ADHD",
+                    "ADOPTION_FOSTER_CARE",
+                    "ALZHEIMERS_DEMENTIA",
+                    "ANGER",
+                    "ANIMAL_LOSS",
+                    "ANXIETY",
+                    "AUTISM",
+                    "BIPOLAR_DISORDER",
+                    "BODY_IMAGE",
+                    "BURNOUT",
+                    "CAREGIVER_BURNOUT",
+                    "CHRONIC_ILLNESS",
+                    "COUPLES_THERAPY_2_PLUS",
+                    "CULTURAL_ISSUES_RACIAL_TRAUMA",
+                    "DEPRESSION",
+                    "DIVORCE",
+                    "EATING_DISORDER",
+                    "FAMILY_CONDUCT",
+                    "FAMILY_THERAPY_2_PLUS",
+                    "GRIEF",
+                    "IMMIGRATION",
+                    "INDIVIDUAL_THERAPY",
+                    "IPV_DV",
+                    "LGBTQ_PLUS",
+                    "LIFE_TRANSITIONS",
+                    "MENS_ISSUES",
+                    "OCD",
+                    "PANIC",
+                    "PERSONALITY_DISORDERS",
+                    "PHOBIAS",
+                    "PMDD",
+                    "PREGNANCY_PERIPARTUM_INFERTILITY",
+                    "PREMARITAL",
+                    "RELATIONSHIP_CONCERNS",
+                    "RELIGIOUS_TRAUMA",
+                    "SELF_HARM",
+                    "SEXUAL_TRAUMA",
+                    "SLEEP",
+                    "STRESS",
+                    "SUBSTANCE_USE",
+                    "TRANS_PLUS",
+                    "TRAUMA",
+                    "WOMENS_ISSUES",
+                    "WORKPLACE_STRESS"
+                  ],
+                  "title": "ClinicalNeed",
+                  "type": "string"
+                },
+                "required": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "title": "Required"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "title": "ClinicalNeedFilter",
+              "type": "object"
+            },
+            "maxItems": 45,
+            "title": "Clinicalneeds",
+            "type": "array"
+          },
+          "modalities": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "enum": [
+                    "ACT",
+                    "ART",
+                    "CBT",
+                    "CBT_I",
+                    "COUPLES",
+                    "COUPLES_ICBT",
+                    "CPT",
+                    "DBT",
+                    "EFT",
+                    "EMDR",
+                    "ERP",
+                    "HARM_REDUCTION",
+                    "IFS",
+                    "INTERPERSONAL_PSYCHOTHERAPY",
+                    "MBCT",
+                    "MOTIVATIONAL_INTERVIEWING",
+                    "PROLONGED_EXPOSURE",
+                    "PSYCHODYNAMIC",
+                    "RELATIONAL",
+                    "SOLUTION_FOCUSED",
+                    "STRENGTHS_BASED"
+                  ],
+                  "title": "Modality",
+                  "type": "string"
+                },
+                "required": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "title": "Required"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "title": "ModalityFilter",
+              "type": "object"
+            },
+            "maxItems": 21,
+            "title": "Modalities",
+            "type": "array"
+          },
+          "genderPreferences": {
+            "items": {
+              "description": "Gender filter accepted from clients on provider search",
+              "enum": [
+                "MALE",
+                "FEMALE",
+                "NO_PREFERENCE"
+              ],
+              "title": "GenderPreference",
+              "type": "string"
+            },
+            "maxItems": 3,
+            "title": "Genderpreferences",
+            "type": "array"
+          },
+          "languages": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "id": {
+                  "enum": [
+                    "ENGLISH",
+                    "SPANISH",
+                    "PERSIAN",
+                    "HINDI",
+                    "MANDARIN_CHINESE",
+                    "CANTONESE",
+                    "PORTUGUESE",
+                    "AMERICAN_SIGN_LANGUAGE",
+                    "ARABIC",
+                    "ARMENIAN",
+                    "BURMESE",
+                    "DUTCH",
+                    "FRENCH",
+                    "GERMAN",
+                    "GUJARATI",
+                    "HAITIAN",
+                    "HEBREW",
+                    "HMONG",
+                    "HUNGARIAN",
+                    "INDONESIAN",
+                    "ITALIAN",
+                    "JAPANESE",
+                    "KACHHI",
+                    "KOREAN",
+                    "MALAYALAM",
+                    "MODERN_GREEK",
+                    "PASHTO",
+                    "POLISH",
+                    "PUNJABI",
+                    "ROMANIAN",
+                    "RUSSIAN",
+                    "STANDARD_MALAY",
+                    "SWEDISH",
+                    "TAGALOG",
+                    "TAMIL",
+                    "UKRAINIAN",
+                    "URDU",
+                    "VIETNAMESE",
+                    "YORUBA"
+                  ],
+                  "title": "Language",
+                  "type": "string"
+                },
+                "required": {
+                  "anyOf": [
+                    {
+                      "type": "boolean"
+                    },
+                    {
+                      "type": "null"
+                    }
+                  ],
+                  "default": null,
+                  "title": "Required"
+                }
+              },
+              "required": [
+                "id"
+              ],
+              "title": "LanguageFilter",
+              "type": "object"
+            },
+            "maxItems": 39,
+            "title": "Languages",
+            "type": "array"
+          },
+          "siteOfCare": {
+            "enum": [
+              "VIRTUAL",
+              "IN_PERSON",
+              "EITHER"
+            ],
+            "title": "McpSiteOfCare",
+            "type": "string",
+            "default": "VIRTUAL",
+            "description": "VIRTUAL by default; IN_PERSON when asked; EITHER when the customer chose Either. Omitting the field is virtual, not Either"
+          },
+          "daysOfWeek": {
+            "items": {
+              "description": "Days of the week for provider availability filtering.\n\nValues match ISO 8601 weekday abbreviations.",
+              "enum": [
+                "MON",
+                "TUE",
+                "WED",
+                "THU",
+                "FRI",
+                "SAT",
+                "SUN"
+              ],
+              "title": "DayOfWeek",
+              "type": "string"
+            },
+            "maxItems": 7,
+            "title": "Daysofweek",
+            "type": "array"
+          },
+          "hourRanges": {
+            "items": {
+              "additionalProperties": false,
+              "properties": {
+                "startHour": {
+                  "maximum": 23,
+                  "minimum": 0,
+                  "title": "Starthour",
+                  "type": "integer"
+                },
+                "endHour": {
+                  "description": "Half-open upper bound; 24 means end of day",
+                  "maximum": 24,
+                  "minimum": 1,
+                  "title": "Endhour",
+                  "type": "integer"
+                }
+              },
+              "required": [
+                "startHour",
+                "endHour"
+              ],
+              "title": "HourRange",
+              "type": "object"
+            },
+            "maxItems": 24,
+            "title": "Hourranges",
+            "type": "array"
+          },
+          "pagination": {
+            "additionalProperties": false,
+            "description": "MCP search pagination; defaults to four providers per page",
+            "properties": {
+              "pageSize": {
+                "default": 4,
+                "maximum": 100,
+                "minimum": 1,
+                "title": "Pagesize",
+                "type": "integer"
+              },
+              "pageToken": {
+                "anyOf": [
+                  {
+                    "pattern": "^\\d{1,18}$",
+                    "type": "string"
+                  },
+                  {
+                    "type": "null"
+                  }
+                ],
+                "default": null,
+                "description": "Absolute ranking offset from a previous response's nextPageToken",
+                "title": "Pagetoken"
+              }
+            },
+            "title": "McpPagination",
+            "type": "object"
+          },
+          "freeText": {
+            "anyOf": [
+              {
+                "maxLength": 1000,
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Semantic free-text query used for ranking (at most 1000 characters)",
+            "title": "Freetext"
+          },
+          "providerPartner": {
+            "anyOf": [
+              {
+                "description": "Canonical supply-partner labels derived from Eris EHRType.",
+                "enum": [
+                  "sondermind",
+                  "ensora",
+                  "grow-therapy",
+                  "simple-practice",
+                  "rula"
+                ],
+                "title": "SupplyPartner",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Only return providers contracted through this provider partner"
+          },
+          "preferredLocation": {
+            "anyOf": [
+              {
+                "additionalProperties": false,
+                "properties": {
+                  "latitude": {
+                    "description": "Latitude in decimal degrees (-90 to 90)",
+                    "maximum": 90,
+                    "minimum": -90,
+                    "title": "Latitude",
+                    "type": "number"
+                  },
+                  "longitude": {
+                    "description": "Longitude in decimal degrees (-180 to 180)",
+                    "maximum": 180,
+                    "minimum": -180,
+                    "title": "Longitude",
+                    "type": "number"
+                  }
+                },
+                "required": [
+                  "latitude",
+                  "longitude"
+                ],
+                "title": "PreferredLocation",
+                "type": "object"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional in-person search origin as latitude/longitude. Requires radius_miles and site_of_care IN_PERSON. Virtual matching stays statewide: a licensed provider can serve the customer elsewhere in the requested state. ZIP and city are valid origins: convert a US ZIP centroid or city center to this coordinate. When a ZIP was used, also send origin_zip. Do not tell the customer ZIP is unsupported"
+          },
+          "radiusMiles": {
+            "anyOf": [
+              {
+                "exclusiveMinimum": 0,
+                "maximum": 300.0,
+                "type": "number"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional miles from preferred_location (greater than 0, at most 300). Requires preferred_location and site_of_care IN_PERSON. Omit for statewide virtual search",
+            "title": "Radiusmiles"
+          },
+          "bookingSource": {
+            "anyOf": [
+              {
+                "enum": [
+                  "rightway",
+                  "premera",
+                  "internal_testing"
+                ],
+                "title": "BookingSource",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional Care Nav booking source"
+          },
+          "desiredDate": {
+            "anyOf": [
+              {
+                "format": "date",
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Calendar date in timezone to pin results to one day; omit to search all upcoming availability",
+            "title": "Desireddate"
+          },
+          "originZip": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "5-digit US ZIP used as the in-person origin. Send with preferred_location when a ZIP was converted to coordinates. Display-only for Why this match; not a ranking filter",
+            "title": "Originzip"
+          },
+          "constraints": {
+            "description": "Classify every stated criterion as MUST_HAVE or PREFERENCE before searching. Must-haves stay hard filters; do not omit or relax them without asking. Preferences on clinicalNeeds, languages, and modalities use required=false. Preferences on insurance, gender, availability, populations, and geo are omitted from the hard filter and shown as Preferences. When the customer agrees to drop a must-have, keep the original value and set relaxed=true so results label it as Also considered. Do not classify unstated fields. This search does not filter by budget",
+            "items": {
+              "description": "How one stated search field should be applied and shown",
+              "properties": {
+                "field": {
+                  "enum": [
+                    "STATE",
+                    "INSURANCE",
+                    "CLINICAL_NEEDS",
+                    "LANGUAGES",
+                    "GENDER",
+                    "AVAILABILITY",
+                    "SITE_OF_CARE",
+                    "GEO",
+                    "MODALITIES",
+                    "PATIENT_POPULATIONS"
+                  ],
+                  "title": "McpConstraintField",
+                  "type": "string",
+                  "description": "Search field the customer stated"
+                },
+                "strength": {
+                  "enum": [
+                    "MUST_HAVE",
+                    "PREFERENCE"
+                  ],
+                  "title": "McpConstraintStrength",
+                  "type": "string",
+                  "description": "MUST_HAVE is a hard filter; PREFERENCE is ranking-only or display-only"
+                },
+                "relaxed": {
+                  "default": false,
+                  "description": "True when the customer agreed to drop a former must-have; keep the original value for echo",
+                  "title": "Relaxed",
+                  "type": "boolean"
+                }
+              },
+              "required": [
+                "field",
+                "strength"
+              ],
+              "title": "McpSearchConstraint",
+              "type": "object"
+            },
+            "title": "Constraints",
+            "type": "array"
+          }
+        },
+        "required": [
+          "state",
+          "insurance"
+        ],
+        "type": "object",
+        "additionalProperties": false,
+        "description": "Search filters with MCP defaults from the ChatGPT intake flow",
+        "title": "McpProviderSearchRequest"
+      }
+    },
+    {
+      "name": "render_provider_results",
+      "description": "Render the provider-results widget from a search_providers result. Always call search_providers first, then pass its searchId. Optionally pass providerIds to show a subset of that search, in the given order. Do not add provider ids that were not in the search result. Call this once per turn with the final search. Empty results still render the empty widget. This tool only presents cards; it does not search or rank providers. If searchId is expired, call search_providers again",
+      "inputSchema": {
+        "properties": {
+          "searchId": {
+            "description": "searchId from the final search_providers result",
+            "title": "Searchid",
+            "type": "string"
+          },
+          "providerIds": {
+            "anyOf": [
+              {
+                "items": {
+                  "format": "uuid",
+                  "type": "string"
+                },
+                "type": "array"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "description": "Optional subset of provider ids from that search, in display order. Omit to render every card. Do not add ids that were not in the search result",
+            "title": "Providerids"
+          }
+        },
+        "required": [
+          "searchId"
+        ],
+        "type": "object",
+        "description": "Reference to a search_providers snapshot to show in the widget",
+        "title": "McpProviderResultsRenderRequest"
+      }
+    }
+  ]
+}

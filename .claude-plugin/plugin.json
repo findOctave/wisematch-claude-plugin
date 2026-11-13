@@ -1,0 +1,19 @@
+{
+  "name": "wisematch",
+  "version": "1.0.0",
+  "description": "Search in-network licensed mental health providers and show upcoming availability",
+  "author": {
+    "name": "Octave Health Group",
+    "email": "support@findoctave.com",
+    "url": "https://www.wisematch.com"
+  },
+  "homepage": "https://www.wisematch.com",
+  "license": "Proprietary",
+  "keywords": [
+    "mental-health",
+    "therapy",
+    "in-network",
+    "providers",
+    "availability"
+  ]
+}

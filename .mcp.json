@@ -1,0 +1,8 @@
+{
+  "mcpServers": {
+    "wisematch": {
+      "type": "http",
+      "url": "https://pluto.wisematch.com/mcp"
+    }
+  }
+}
