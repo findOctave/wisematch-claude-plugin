@@ -9,6 +9,7 @@
   },
   "homepage": "https://www.wisematch.com",
   "privacyPolicyUrl": "https://www.wisematch.com/privacy",
+  "icon": "./assets/logo-blue.png",
   "license": "Proprietary",
   "keywords": [
     "mental-health",
