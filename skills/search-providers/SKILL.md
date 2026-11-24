@@ -21,13 +21,7 @@ The audited service is WiseMatch 1.30.0, inspected November 2, 2026. It exposes 
 
 Read [references/mcp-contract.json](references/mcp-contract.json) before constructing a request when the host hides the full schema or when an enum/shape is unclear. It contains both tools' complete input schemas, captured from `tools/list`. A newer live schema takes precedence over this snapshot. Do not infer request schemas from examples of responses or from truncated host descriptions.
 
-Where local Python execution is available, validate planned argument JSON before calling either tool:
-
-```sh
-uv run --with jsonschema python scripts/validate_call.py --tool search_providers request.json
-```
-
-Resolve script/reference paths relative to this skill directory. Use `--tool render_provider_results` for render arguments. The validator performs no network calls: it checks the captured schema plus date/weekday consistency, hour ordering, coordinate dependencies, and unknown top-level fields. If this runtime is unavailable, perform the same checks directly from the contract; do not send exploratory invalid calls during a customer's search. Validation cannot prove availability, coverage, fit, or that the live schema has not changed.
+Before calling either tool, check the planned arguments against the contract for that tool: no unknown top-level fields and no nulls, an explicit timezone, a `desiredDate` whose weekday is in `daysOfWeek`, ordered `hourRanges`, and the coordinate, radius, ZIP, and site-of-care dependencies in Local argument checks. Resolve reference paths relative to this skill directory. Do not send exploratory invalid calls during a customer's search. These checks cannot prove availability, coverage, fit, or that the live schema has not changed.
 
 ## Flow
 

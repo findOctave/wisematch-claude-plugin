@@ -15,7 +15,6 @@ WiseMatch is owned by Octave Health Group.
 | `.mcp.json` | Connects the remote WiseMatch MCP server at `https://pluto.wisematch.com/mcp` |
 | `skills/search-providers/SKILL.md` | Conversation flow for collecting filters, searching, and presenting results |
 | `skills/search-providers/references/mcp-contract.json` | Snapshot of both tools' input schemas from `tools/list` |
-| `skills/search-providers/scripts/validate_call.py` | Offline validator for planned tool arguments |
 
 The MCP server exposes two read-only tools: `search_providers` and `render_provider_results`.
 
@@ -43,13 +42,9 @@ Install the plugin from this marketplace where plugins are supported (Cowork), o
 - **Claude Desktop and claude.ai** render the provider results widget inline (MCP Apps, `ui://wisematch/provider-results/...`).
 - **Claude Code** has no widget surface. The skill still calls `render_provider_results`, then shows a markdown table with each provider's name linked to booking, specialties, insurance, and next availability.
 
-## Validating tool arguments
+## Privacy
 
-```sh
-uv run --with jsonschema python skills/search-providers/scripts/validate_call.py --tool search_providers request.json
-```
-
-The script makes no network calls. Besides schema validation, it rejects unknown fields and nulls, and checks the following: a timezone is sent explicitly, the `desiredDate` weekday matches `daysOfWeek`, hour ranges are ordered, and the coordinate, radius, ZIP, and site-of-care dependencies hold. Pass `-` to read the arguments from stdin.
+WiseMatch's privacy policy: [https://www.wisematch.com/privacy](https://www.wisematch.com/privacy)
 
 ## Keeping in sync
 
