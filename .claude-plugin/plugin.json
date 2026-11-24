@@ -9,6 +9,8 @@
   },
   "homepage": "https://www.wisematch.com",
   "privacyPolicyUrl": "https://www.wisematch.com/privacy",
+  "documentationUrl": "https://docs.wisematch.com/mcp/",
+  "termsOfServiceUrl": "https://www.wisematch.com/terms",
   "icon": "./assets/logo-blue.png",
   "license": "Proprietary",
   "keywords": [
